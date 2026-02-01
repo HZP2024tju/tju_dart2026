@@ -1,0 +1,48 @@
+16进制
+
+偏转舵机 0x071 回中 27 50 -30 
+	 		0x71	0x07C   0x058          0x062        
+下降 舵机 0x021 最上
+上 0x020
+下 0x035
+             0x03F 最下
+抓取舵机 0x070 - 0x02Dh
+            合上   分开
+
+用户自定义接口
+       			缺口
+7		  5 		  3  		 1
+PB14		PB15		PB13		PB12
+
+8		6		4		2
+PF0		PF1		3.3V		GND
+
+限位开关：
+平时高电平，接通是低电平
+由高到低分别为
+NC NO Com
+
+如果一根线接的是从COM进，NO出的话，在限位器没动作的情况下，这条线就是断开的，在限位器被物体碰撞动作之后，这条线路才会通。
+如果一根线接的是从COM进，NC出的话，在限位器没有动作的情况下，这条线路是通的，在限位器被物体碰撞动作之后，这条线路才会断开。
+
+上 1
+中 3
+下 2
+
+在stm32f4xx_it中需要将冲突的如 USART IRQHandler 加上__weak前缀
+static 只赋值一次
+
+底部2006
+顺时针为正  右
+逆时针为负 左
+
+git 操作：
+git remote -v
+
+git branch -m oldname newname 来修改自己的分支
+remote add <自己起名字nerdd> ssh
+add commit 本地文件
+git push --set-upstream nerdd damn
+
+git push --set-upstream nerdd --delete dart杠test
+删除分支
