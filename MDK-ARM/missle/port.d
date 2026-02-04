@@ -1,0 +1,12 @@
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/port.c
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
+missle\port.o: D:\keli5\ARM\ARMCC\Bin\..\include\stddef.h
+missle\port.o: D:\keli5\ARM\ARMCC\Bin\..\include\stdint.h
+missle\port.o: ../Core/Inc/FreeRTOSConfig.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/portable.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/deprecated_definitions.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM4F/portmacro.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
+missle\port.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
