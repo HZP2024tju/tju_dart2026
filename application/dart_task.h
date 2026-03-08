@@ -41,7 +41,7 @@
 /*********************   一些等待时间   ********************/
 #define dart_servo_lock_ready  10            //等待下拉完全后自锁
 #define dart_lock_ready 			 270						//等待舵机自锁
-#define dart_shoot_wait 		600										//等待发射结束
+#define dart_shoot_wait 		800										//等待发射结束
 #define dart_down_ready1   400								//等待舵机下降
 #define dart_down_ready2   470	
 #define dart_turn_ready   700								//等待6020到位
@@ -49,7 +49,7 @@
 #define dart_3508_reset   25									//等待3508复位
 
 #define dart_3508_wait_slow 400               //3508慢速时间
-#define dart_3508_wait_fast 1420
+#define dart_3508_wait_fast 1490
 /*********************   一些等待时间   ********************/
 
 
@@ -86,21 +86,20 @@
 
 //上弹3508的角度
 #define PULL_3508_ANGLE_DOWN	-17.42f
-#define PULL_3508_ANGLE_UP 		0.0001f
-#define PULL_3508_ANGLE_START -2.f
+#define PULL_3508_ANGLE_UP 		-0.1f
 #define PULL_3508_P1				 	-8.74
 #define PULL_3508_P2 					-7.7
 
 
 
 //发射2006 角度环 角度由编码器 
-#define BULLET_2006_ANGLE_PID_KP        14.3f
-#define BULLET_2006_ANGLE_PID_KI        0.000001f
+#define BULLET_2006_ANGLE_PID_KP        14.6f
+#define BULLET_2006_ANGLE_PID_KI        0.0001f
 #define BULLET_2006_ANGLE_PID_KD        0.0001f
 #define BULLET_2006_ANGLE_PID_MAX_OUT   50.0f
 #define BULLET_2006_ANGLE_PID_MAX_IOUT  0.0f
 //发射2006 速度环
-#define BULLET_2006_GYRO_PID_KP        3200.0f
+#define BULLET_2006_GYRO_PID_KP        3000.0f
 #define BULLET_2006_GYRO_PID_KI        0.0f
 #define BULLET_2006_GYRO_PID_KD        0.0f
 #define BULLET_2006_GYRO_PID_MAX_OUT   10000.0f
@@ -109,7 +108,7 @@
 #define BULLET_2006_RESET_PID_MAX_IOUT 0.0f
 
 //yaw 角度环 角度由编码器 
-#define YAW_ANGLE_PID_KP        2.f
+#define YAW_ANGLE_PID_KP        3.f
 #define YAW_ANGLE_PID_KI        0.000f
 #define YAW_ANGLE_PID_KD        0.f // 0,7
 #define YAW_ANGLE_PID_MAX_OUT   10000 //2.0f
@@ -150,15 +149,13 @@
 #define FORCE_BULLET_2006_ANGLE_PID_MAX_IOUT  7000.0f
 
 
-//换弹6020
-
 #define MOTOR_6020_GYRO_PID_KP        300.0f
 #define MOTOR_6020_GYRO_PID_KI        0.000f
 #define MOTOR_6020_GYRO_PID_KD        0.0200f
 #define MOTOR_6020_GYRO_PID_MAX_OUT   7000.0f
 #define MOTOR_6020_GYRO_PID_MAX_IOUT  7000.0f
 
-#define MOTOR_6020_ANGLE_PID_KP        320.6f
+#define MOTOR_6020_ANGLE_PID_KP        310.6f
 #define MOTOR_6020_ANGLE_PID_KI        0.08f
 #define MOTOR_6020_ANGLE_PID_KD        0.4f
 #define MOTOR_6020_ANGLE_PID_MAX_OUT   14.5f
@@ -187,7 +184,7 @@
 #define VIEW 							0
 #define REFEREE_START 		0
 #define Reload_mode_test  0
-#define SHOOT_TIME_SET    1	//设定第一发结束后还要打多少次
+#define SHOOT_TIME_SET    0	//设定第一发结束后还要打多少次
 //一个流程全部的标志位
 typedef enum
 {
@@ -203,6 +200,7 @@ typedef enum
     SHOOT_READY_BULLET,
     SHOOT_BULLET,
     SHOOT_BULLET_DONE,
+		SHOOT_DUMP
 } shoot_mode_e;
 
 typedef enum
@@ -270,6 +268,7 @@ typedef struct
 		Flag_t Reset_all_2006_ready;
 		Flag_t waitingLock;
 		Flag_t topLimitSwitch; //
+		uint8_t Reset_3508_Angle;
 		uint8_t topLimitSwitch_Last;
 		Flag_t bottomLimitSwitch; //
 		uint8_t bottomLimitSwitch_Last;

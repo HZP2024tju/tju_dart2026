@@ -32,8 +32,9 @@ uint16_t downPWM = 81;
 uint16_t lockPWM = 0x53;
 uint16_t unlockPWM = 0x22;                //1100   200   从大到小  为顺时针
 
+float PULL_3508_ANGLE_START = -1.f;
 
-float dart_2006_angle_set = -200;//-70.4;//81.9                     //       46.8469658        3  -50.5     5    -52            1  61.3     3 - 59.5        5 - 61     6  -61             3 -57.8  5  -59.4      6   -57.5    2 -56.8;                       //     5  73   3   71.4;3和5号可以认为一致
+float dart_2006_angle_set = -159.1;//-200                    //       46.8469658        3  -50.5     5    -52            1  61.3     3 - 59.5        5 - 61     6  -61             3 -57.8  5  -59.4      6   -57.5    2 -56.8;                       //     5  73   3   71.4;3和5号可以认为一致
 																			
 //-4 约为35cm  bias
 fp32 Yaw_Angle = -70;//-85;               //修改Yaw轴方向,越负越往右
@@ -84,6 +85,7 @@ float dart_6020_angle_set(uint8_t shoot_time,uint8_t step)
 {
 	switch(shoot_time)
 	{
+
 		case 1:
 			if(step == SERVO_READY)
 			{
@@ -288,6 +290,7 @@ void shoot_flag_renew(dart_control_t *shoot_flag_renew)
 				
 				//复位清零
 				shoot_flag_renew->Dart_Flag.Reset_all_2006_ready.flag = 0;
+				shoot_flag_renew->Dart_Flag.Reset_3508_Angle = 0;
 				//发射次数清0
 				reloadPWM = upPWM;
 				shoot_flag_renew->Shoot_Time = 0;
@@ -402,7 +405,11 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //在这个函数中设置
 				}
 			break;
 			case SHOOT_UPING:
-				if(shoot_set_mode->Dart_Flag.topLimitSwitch.flag == 1)
+				if(shoot_set_mode->Dart_Flag.Reset_3508_Angle == 1)
+				{
+					shoot_set_mode->Shoot_Mode = SHOOT_READY_3508_AND_2006;
+				}
+				else if(shoot_set_mode->Dart_Flag.topLimitSwitch.flag == 1)
 				{
 					shoot_set_mode->Dart_Flag.topLimitSwitch.count ++;
 					
@@ -412,14 +419,14 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //在这个函数中设置
 								shoot_set_mode->Dart_Flag.topLimitSwitch.flag = 0;
 								shoot_set_mode->Dart_Flag.topLimitSwitch.count = 0;
 								dart_angle_clear(&shoot_set_mode->Dart_3508_Motor);
+								shoot_set_mode->Dart_Flag.Reset_3508_Angle = 1;
 					}
 				}
+				
 			break;
 			
 			case SHOOT_RELOADING:
-#if Reload_mode_test
-			
-#else
+
 				if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.flag == 1)
 					{
 									shoot_set_mode->Dart_Flag.bottomLimitSwitch.count ++;
@@ -435,7 +442,7 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //在这个函数中设置
 											shoot_set_mode->Dart_Flag.bottomLimitSwitch.count = 0;
 							}						
 					}		
-#endif
+
 					break;
 			
 			case SHOOT_FINISH_PULL:
@@ -488,9 +495,8 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //在这个函数中设置
 #if AUTO_RELOAD_TEST
 
 	dart_auto_reload(shoot_set_mode,last_s);
-						
+	judge_set_shoot(shoot_set_mode->Shoot_Time);
 #else 			
-
 
 				if(switch_is_up(shoot_set_mode->Dart_Rc_Ctrl->rc.s[SHOOT_MODE_CHANNEL]) && 
 					      !switch_is_up(last_s) 

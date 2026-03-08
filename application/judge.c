@@ -19,11 +19,11 @@ uint8_t shoot_time_last = 0;
 
 float judge_arr[5];
 
-float judge_bias1 = -76.9 ;        // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+float judge_bias1 = -159.1 ; //150       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 
-float judge_bias2 = -76.8;//84.5            //Yaw -97    //0.4约为半个装甲板
+float judge_bias2 = -159.1;//            //Yaw -97    //0.4约为半个装甲板
 
-float judge_bias3 = -74.3; //-83,9   
+float judge_bias3 = -150.1; //-83,9   
 
 float judge_bias4 = -74.44;
 
