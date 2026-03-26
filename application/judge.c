@@ -4,6 +4,7 @@
 #include "dart_task.h"
 
 extern UART_HandleTypeDef huart6;
+extern uint16_t downPWM;
 extern float view_bias;
 extern float force_mv_set;
 extern dart_control_t dart_control;
@@ -19,32 +20,32 @@ uint8_t shoot_time_last = 0;
 
 float judge_arr[5];
 
-float judge_bias1 = -159.1 ; //150       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+float judge_bias1 = -168.5 ; //170       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 
-float judge_bias2 = -159.1;//            //Yaw -97    //0.4约为半个装甲板
+float judge_bias2 = -171.6;//            //Yaw -97    //0.4约为半个装甲板
 
-float judge_bias3 = -150.1; //-83,9   
+float judge_bias3 = -170.5; //-83,9   
 
-float judge_bias4 = -74.44;
+float judge_bias4 = -170.7;
 
-float judge_bias5 = -75.4;    //
+float judge_bias5 = -166.2;    //
 
 float judge_bias6 = -74.44 ;  //6 4 5距离相似
 
  
 
 
-float judge_view_bias1 = -0.031  ;      //越小越左  0.0015 约为四分之一个装甲板           //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+float judge_view_bias1 =  -0.0062  ;      //越小越左  0.004 约为一个装甲板           //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 
-float judge_view_bias2 = -0.0404;    //0x0229     0.0001为半个
+float judge_view_bias2 =	-0.012;    //0x0229     
 
-float judge_view_bias3 =  -0.085;//-0.0170    
+float judge_view_bias3 = -0.010;//-0.0170    
 
-float judge_view_bias4 = -0.0349;
+float judge_view_bias4 = -0.0073;
 
-float judge_view_bias5 = -0.0416;    //0.0189
+float judge_view_bias5 = -0.013;    //0.0189
 
-float judge_view_bias6 = -0.0407; //0.0257
+float judge_view_bias6 = -0.0; //0.0257
 
 float judge_mv_bias1 = 366.4  ;                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 float judge_mv_bias3 = 366.4;    
@@ -61,7 +62,7 @@ uint8_t judge_lable = 0;
 /***** 在这里设定发射顺序 *******/
 void judge_set_shoot(uint8_t shoot_time)
 {
-		judge_shoot_angle(1,2,3,4,shoot_time);            
+		judge_shoot_angle(5,1,2,3,shoot_time);  	//          
 }
 /***** 在这里设定发射顺序 *******/
 
@@ -73,26 +74,32 @@ void judge_choose_bias(uint8_t lable)
 	switch(lable)
 	{
 		case 1:
+			downPWM = SERVO_DOWN1;         //1号镖用的老镖头
 			dart_2006_angle_set = judge_bias1;
 			view_bias = judge_view_bias1;
 		break;
 		case 2:
+			downPWM = SERVO_DOWN2;
 			dart_2006_angle_set = judge_bias2;
 			view_bias = judge_view_bias2;
 		break;
 		case 3:
+			downPWM = SERVO_DOWN3;
 			dart_2006_angle_set = judge_bias3;
 			view_bias = judge_view_bias3;
 		break;
 		case 4:
+			downPWM = SERVO_DOWN4;
 			dart_2006_angle_set = judge_bias4;
 			view_bias = judge_view_bias4;
 		break;
 		case 5:
+			downPWM = SERVO_DOWN5;
 			dart_2006_angle_set = judge_bias5;
 			view_bias = judge_view_bias5;
 		break;
 		case 6:
+			downPWM = SERVO_DOWN6;
 			dart_2006_angle_set = judge_bias6;
 			view_bias = judge_view_bias6;
 		break;
@@ -126,9 +133,9 @@ void get_judge(void const * argument)
 	//judge_init();
 	while(1)
 	{
-		judge_view_send();
-		CDC_Transmit_FS(view_send, 9);
-		osDelay(100);
+//		judge_view_send();
+		CDC_Transmit_FS(view_send, 9);   //视觉说我发给他消息他才能发给我,何意味??
+		osDelay(10);
 
 	}
 }
@@ -138,7 +145,7 @@ void get_judge(void const * argument)
 void judge_view_send()
 {
 	View_send.head = 0xA5;
-	View_send.shoot_time = judge_lable ; //向视觉发送本次击打使用哪个编号的飞镖(记得告诉他把偏移删了)
+	View_send.shoot_time = judge_lable ; //向视觉发送本次击打使用哪个编号的飞镖(已弃用)
 	View_send.tail = '\n';
 	
 	memcpy(view_send,&View_send,9);

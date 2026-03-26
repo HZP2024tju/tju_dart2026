@@ -26,6 +26,9 @@ float force_mv;
 
 int err_count = 0;
 int err = 0;
+
+//这里史山有点多,哈哈让大一的来修吧
+
 /**
 * @brief
 * @param
@@ -81,7 +84,7 @@ void get_force(void const * argument)
 		force_rx_handler();
 
 		if(force_rx_ok == 1 || force_tx_count == 8	)           //太短了反而会无法读取
-{
+	{
 
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart1,force_rx_arr,40);   //时序要求很紧
 
@@ -119,7 +122,7 @@ void force_rx_handler()
 		{
 		force_check = 1;
 		force_change = ((force_rx_arr[3] << 8) | force_rx_arr[4]);
-		force_mv = force_change * 0.1; 
+		force_mv = force_change; 
 
     //             																											  //放大信号
 		}

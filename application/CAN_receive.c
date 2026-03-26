@@ -89,7 +89,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 								}
 								
 								//º∆À„ ‰≥ˆ÷·Ω«∂» 
-								dart_control.Dart_2006_Bullet_Motor.angle = -dart_control.Dart_2006_Bullet_Motor.round_cnt*2*PI/REDUCTION_RATIO_2006 - (motor_chassis[1].ecd - dart_control.Dart_2006_Bullet_Motor.offset_ecd) * MOTOR_ECD_TO_ANGLE / REDUCTION_RATIO_2006;
+								dart_control.Dart_2006_Bullet_Motor.angle = -dart_control.Dart_2006_Bullet_Motor.round_cnt*2*PI/REDUCTION_RATIO_2006 - (motor_chassis[CAN_2006_M2_ID - CAN_DART_ALL_ID].ecd - dart_control.Dart_2006_Bullet_Motor.offset_ecd) * MOTOR_ECD_TO_ANGLE / REDUCTION_RATIO_2006;
                 
 						}
 						

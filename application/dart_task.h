@@ -39,17 +39,18 @@
 #define SHOOT_MODE_CHANNEL 1
 
 /*********************   一些等待时间   ********************/
-#define dart_servo_lock_ready  10            //等待下拉完全后自锁
-#define dart_lock_ready 			 270						//等待舵机自锁
-#define dart_shoot_wait 		800										//等待发射结束
+#define dart_servo_lock_ready  10            //等待下拉到位后自锁
+#define dart_lock_ready 			 280						//等待舵机自锁
+#define dart_shoot_wait 		900										//等待发射结束
 #define dart_down_ready1   400								//等待舵机下降
 #define dart_down_ready2   470	
-#define dart_turn_ready   700								//等待6020到位
-#define dart_yaw_ready   	50									//yaw堵转复位时间
-#define dart_3508_reset   25									//等待3508复位
+#define dart_turn_ready   1200								//等待6020到位
+#define dart_yaw_ready   	140									//yaw堵转复位时间
+#define dart_Bullet_ready  80
+#define dart_3508_reset   75									//等待3508复位
 
-#define dart_3508_wait_slow 400               //3508慢速时间
-#define dart_3508_wait_fast 1490
+#define dart_3508_wait_slow 600               //3508慢速时间
+#define dart_3508_wait_fast 1540
 /*********************   一些等待时间   ********************/
 
 
@@ -61,7 +62,7 @@
 //发射2006电机需要的位置和速度
 #define BULLET_2006_RESERT_SPEED_SET	50.0f
 //偏转2006电机需要的位置和速度
-#define Yaw_2006_RESERT_SPEED_SET	30.0f
+#define Yaw_2006_RESERT_SPEED_SET	17.0f
 
 
 //装弹2006电机需要的位置和速度
@@ -82,64 +83,34 @@
 #define BULLET_3508_ANGLE_PID_MAX_IOUT  20.0f
 
 //设定3508敏感值
-#define DART_3508_SENSITIVE 0.36 
+#define DART_3508_SENSITIVE 0.09 
 
 //上弹3508的角度
-#define PULL_3508_ANGLE_DOWN	-17.42f
-#define PULL_3508_ANGLE_UP 		-0.1f
-#define PULL_3508_P1				 	-8.74
-#define PULL_3508_P2 					-7.7
+#define PULL_3508_ANGLE_DOWN	-17.57f
+#define PULL_3508_ANGLE_UP 		-0.07f
+#define PULL_3508_P1				 	-8.60000038
+#define PULL_3508_P2 					-7.5
 
 
 
 //发射2006 角度环 角度由编码器 
-#define BULLET_2006_ANGLE_PID_KP        14.6f
-#define BULLET_2006_ANGLE_PID_KI        0.0001f
-#define BULLET_2006_ANGLE_PID_KD        0.0001f
-#define BULLET_2006_ANGLE_PID_MAX_OUT   50.0f
-#define BULLET_2006_ANGLE_PID_MAX_IOUT  0.0f
+#define BULLET_2006_ANGLE_PID_KP        120.6f
+#define BULLET_2006_ANGLE_PID_KI        0.001f
+#define BULLET_2006_ANGLE_PID_KD        0.001f
+#define BULLET_2006_ANGLE_PID_MAX_OUT   30.0f
+#define BULLET_2006_ANGLE_PID_MAX_IOUT  10.0f
 //发射2006 速度环
-#define BULLET_2006_GYRO_PID_KP        3000.0f
+#define BULLET_2006_GYRO_PID_KP        2000.0f
 #define BULLET_2006_GYRO_PID_KI        0.0f
 #define BULLET_2006_GYRO_PID_KD        0.0f
-#define BULLET_2006_GYRO_PID_MAX_OUT   10000.0f
+#define BULLET_2006_GYRO_PID_MAX_OUT   5000.0f
 #define BULLET_2006_GYRO_PID_MAX_IOUT  0.0f
-#define BULLET_2006_RESET_PID_MAX_OUT  2000.0f
-#define BULLET_2006_RESET_PID_MAX_IOUT 0.0f
-
-//yaw 角度环 角度由编码器 
-#define YAW_ANGLE_PID_KP        3.f
-#define YAW_ANGLE_PID_KI        0.000f
-#define YAW_ANGLE_PID_KD        0.f // 0,7
-#define YAW_ANGLE_PID_MAX_OUT   10000 //2.0f
-#define YAW_ANGLE_PID_MAX_IOUT  0.0f
-//yaw 速度环
-#define YAW_GYRO_PID_KP        4000.0f
-#define YAW_GYRO_PID_KI        0.00000f
-#define YAW_GYRO_PID_KD        0.01f
-#define YAW_GYRO_PID_MAX_OUT   16000.0f
-#define YAW_GYRO_PID_MAX_IOUT  3000.0f
-
-#define DART_YAW_SENSITIVE 1
-
-
-#define YAW_VIEW_ANGLE_PID_KP        0.6f
-#define YAW_VIEW_ANGLE_PID_KI        0.000f
-#define YAW_VIEW_ANGLE_PID_KD        0.001f // 0,7
-#define YAW_VIEW_ANGLE_PID_MAX_OUT   4000 //2.0f
-#define YAW_VIEW_ANGLE_PID_MAX_IOUT  0.0f
-//yaw 速度环
-#define YAW_VIEW_GYRO_PID_KP        4000.0f
-#define YAW_VIEW_GYRO_PID_KI        0.00000f
-#define YAW_VIEW_GYRO_PID_KD        0.00001f
-#define YAW_VIEW_GYRO_PID_MAX_OUT   16000.0f
-#define YAW_VIEW_GYRO_PID_MAX_IOUT  3000.0f
 
 //发射2006力反馈
 #define FORCE_BULLET_2006_GYRO_PID_KP        3200.0f
 #define FORCE_BULLET_2006_GYRO_PID_KI        0.000f
 #define FORCE_BULLET_2006_GYRO_PID_KD        0.04000f
-#define FORCE_BULLET_2006_GYRO_PID_MAX_OUT   10000.0f
+#define FORCE_BULLET_2006_GYRO_PID_MAX_OUT   15000.0f
 #define FORCE_BULLET_2006_GYRO_PID_MAX_IOUT  7000.0f
 
 #define FORCE_BULLET_2006_ANGLE_PID_KP        0.60003
@@ -148,30 +119,65 @@
 #define FORCE_BULLET_2006_ANGLE_PID_MAX_OUT   13000.0f
 #define FORCE_BULLET_2006_ANGLE_PID_MAX_IOUT  7000.0f
 
+//yaw 角度环 角度由编码器 
+#define YAW_ANGLE_PID_KP        2.f
+#define YAW_ANGLE_PID_KI        0.000f
+#define YAW_ANGLE_PID_KD        0.f // 0,7
+#define YAW_ANGLE_PID_MAX_OUT   17 //2.0f
+#define YAW_ANGLE_PID_MAX_IOUT  0.0f
+//yaw 速度环
+#define YAW_GYRO_PID_KP        3000.0f
+#define YAW_GYRO_PID_KI        0.00000f
+#define YAW_GYRO_PID_KD        0.001f
+#define YAW_GYRO_PID_MAX_OUT   6000.0f
+#define YAW_GYRO_PID_MAX_IOUT  3000.0f
 
-#define MOTOR_6020_GYRO_PID_KP        300.0f
+#define DART_YAW_SENSITIVE 4
+
+
+#define YAW_VIEW_ANGLE_PID_KP        0.9f
+#define YAW_VIEW_ANGLE_PID_KI        0.300f
+#define YAW_VIEW_ANGLE_PID_KD        0.0006f // 0,7
+#define YAW_VIEW_ANGLE_PID_MAX_OUT   30 //2.0f
+#define YAW_VIEW_ANGLE_PID_MAX_IOUT  4.0f
+//yaw 速度环
+#define YAW_VIEW_GYRO_PID_KP        350.0f
+#define YAW_VIEW_GYRO_PID_KI        0.00000f
+#define YAW_VIEW_GYRO_PID_KD        0.0004f
+#define YAW_VIEW_GYRO_PID_MAX_OUT   30000.0f
+#define YAW_VIEW_GYRO_PID_MAX_IOUT  3000.0f
+
+#define MOTOR_6020_GYRO_PID_KP        1500.0f
 #define MOTOR_6020_GYRO_PID_KI        0.000f
-#define MOTOR_6020_GYRO_PID_KD        0.0200f
-#define MOTOR_6020_GYRO_PID_MAX_OUT   7000.0f
+#define MOTOR_6020_GYRO_PID_KD        0.000200f
+#define MOTOR_6020_GYRO_PID_MAX_OUT   60000.0f
 #define MOTOR_6020_GYRO_PID_MAX_IOUT  7000.0f
 
-#define MOTOR_6020_ANGLE_PID_KP        310.6f
-#define MOTOR_6020_ANGLE_PID_KI        0.08f
-#define MOTOR_6020_ANGLE_PID_KD        0.4f
-#define MOTOR_6020_ANGLE_PID_MAX_OUT   14.5f
-#define MOTOR_6020_ANGLE_PID_MAX_IOUT  20.0f
+#define MOTOR_6020_ANGLE_PID_KP        55.6f
+#define MOTOR_6020_ANGLE_PID_KI        0.00008f
+#define MOTOR_6020_ANGLE_PID_KD        0.00001f
+#define MOTOR_6020_ANGLE_PID_MAX_OUT   6.5f
+#define MOTOR_6020_ANGLE_PID_MAX_IOUT  10.0f
 
-//换弹6020的各个角度 , 以第一个发射角度为基准
+//换弹6020的各个角度 , 以第一个发射角度为基准  最好每次上场前校准换弹角度
 #define RELOAD_6020_ANGLE0   -1.03919753 
-#define RELOAD_6020_ANGLE60  -2.087
-#define RELOAD_6020_ANGLE120 -3.134197533333333
-#define RELOAD_6020_ANGLE180 0
-#define RELOAD_6020_ANGLE240 0
-#define RELOAD_6020_ANGLE300 0
-#define RELOAD_6020_ANGLE360 0
+#define RELOAD_6020_ANGLE60  -2.05940008
+#define RELOAD_6020_ANGLE120 -3.1341975
+#define RELOAD_6020_ANGLE180 -4.09300023
+#define RELOAD_6020_ANGLE240 -5.2
+#define RELOAD_6020_ANGLE300 -6.23812056
+#define RELOAD_6020_ANGLE360 -7.30
 //60 180 300 是换弹角度,需要标定
 //设定6020敏感度(与设定角度差多少时可以开始下一次行动)
 #define DART_6020_SENSITIVE 0.2
+
+//舵机下降值
+#define SERVO_DOWN1 85
+#define SERVO_DOWN2 79
+#define SERVO_DOWN3 79
+#define SERVO_DOWN4 79
+#define SERVO_DOWN5 79
+#define SERVO_DOWN6 79
 
 
 //测试模式下定义为0，比赛模式下定义为1
@@ -181,35 +187,28 @@
 //自动换弹模式:只需要左上一次即可连发四次
 #define AUTO_RELOAD_TEST 	1
 #define FORCE_CONTROL 		0
-#define VIEW 							0
+#define VIEW_NX 					1
 #define REFEREE_START 		0
 #define Reload_mode_test  0
-#define SHOOT_TIME_SET    0	//设定第一发结束后还要打多少次
+#define SHOOT_TIME_SET    3	//设定第一发结束后还要打多少次
 //一个流程全部的标志位
 typedef enum
 {
-    SHOOT_STOP = 0,
-		SHOOT_START,//3508，2006开始复位
-    SHOOT_READY_3508_AND_2006,//就位模式，3508下拉，2006就位
-    SHOOT_FINISH_PULL,//3508发射前复位
-		SHOOT_UPING,
-		SHOOT_RELOADING,
-		SHOOT_DOWN_BULLET,
-		SHOOT_RESET,
-		SHOOT_RELOAD_FINISH,
-    SHOOT_READY_BULLET,
-    SHOOT_BULLET,
-    SHOOT_BULLET_DONE,
-		SHOOT_DUMP
+    SHOOT_STOP = 0,								//停止射击,现已被SHOOT_READY_3508_AND_2006替代
+		SHOOT_READY_3508_AND_2006,
+		SHOOT_UPING,            			//上力时复位
+    SHOOT_FINISH_PULL,						//3508发射前复位
+		SHOOT_RELOADING,              //正在装弹或者上弹
+    SHOOT_READY_BULLET,						//完成上弹
+    SHOOT_BULLET,                 //射击
 } shoot_mode_e;
 
 typedef enum
 {
-    SERVO_READY = 100,
-		SERVO_UP  	= 101,
-		SERVO_PULL  = 102,
-		SERVO_UPING = 103,
-		SERVO_STAY  = 104,
+    SERVO_READY = 100,    //准备好进行换弹,进行第一步换弹
+		SERVO_UP  	,         //进行第二步换弹
+		SERVO_PULL  ,					//换弹完成,下拉
+		SERVO_UPING ,         //复位
 } servo_mode_e;
 
 //遥控器不同模式
@@ -335,7 +334,7 @@ extern uint8_t view_ok;
 extern uint8_t referee_game_start;
 
 extern uint8_t view_reflash;
-
+extern float view_bias;
 
 extern uint8_t referee_door_open;
 void dart_auto_reload(dart_control_t * dart_reload,int last_switch) ;

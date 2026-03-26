@@ -8,6 +8,9 @@
 
 #define servo_tim htim1
 
+
+//原换弹系统已弃用 舵机初始化仍在使用
+
 extern UART_HandleTypeDef huart3;
 extern TIM_HandleTypeDef htim1;
 extern TIM_HandleTypeDef htim8;
