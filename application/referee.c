@@ -4,13 +4,10 @@
 #include "CAN_receive.h"
 #include "dart_task.h"
 
-
 frame_header_struct referee_receive_header;
 
 extern uint8_t auto_start;
 extern uint8_t auto_start_last;
-
-
 
 //dart_client_cmd_t dart_message;
 

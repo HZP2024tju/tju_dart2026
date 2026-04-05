@@ -36,7 +36,7 @@
 #include "view.h"
 #include "usbd_cdc_if.h"
 #include "force.h"
-
+#include "my_usart.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -56,7 +56,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern uint8_t * judge_rx;
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -76,7 +77,7 @@ void MX_FREERTOS_Init(void);
   * @retval int
   */
 int main(void)
- {
+{
 
   /* USER CODE BEGIN 1 */
 
@@ -111,7 +112,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	
 	servo_ini();
-  force_ini();
 	can_filter_init();
 	
 
@@ -122,7 +122,6 @@ int main(void)
 
 	MX_USB_DEVICE_Init();              //虚拟串口初始化
 
- HAL_UARTEx_ReceiveToIdle_DMA(&huart6,judge_rx,10);
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in cmsis_os2.c) */

@@ -21,7 +21,7 @@ uint8_t reload_start1 = 0;
 uint8_t reload_start1_last = 0;
 uint8_t reload_start2 = 0; 
 uint8_t reload_start2_last = 0;
-uint8_t auto_start = 0;
+
 
 void servo_ini()
 {

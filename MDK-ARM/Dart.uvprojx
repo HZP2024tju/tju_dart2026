@@ -540,6 +540,16 @@
               <FileType>1</FileType>
               <FilePath>..\application\referee_usart_task.c</FilePath>
             </File>
+            <File>
+              <FileName>my_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\my_usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>raspberrypi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\raspberrypi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

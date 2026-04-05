@@ -25,6 +25,8 @@ void referee_usart_task(void const * argument)
 		osDelay(10);
     }
 }
+
+
 //单字节解包
 void referee_unpack_fifo_data(void)
 {

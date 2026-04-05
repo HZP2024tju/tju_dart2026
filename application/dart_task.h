@@ -45,7 +45,7 @@
 #define dart_down_ready1   400								//等待舵机下降
 #define dart_down_ready2   470	
 #define dart_turn_ready   1200								//等待6020到位
-#define dart_yaw_ready   	140									//yaw堵转复位时间
+#define dart_yaw_ready   	250									//yaw堵转复位时间
 #define dart_Bullet_ready  80
 #define dart_3508_reset   75									//等待3508复位
 
@@ -86,11 +86,11 @@
 #define DART_3508_SENSITIVE 0.09 
 
 //上弹3508的角度
+#define PULL_3508_ANGLE_START_SET -1
 #define PULL_3508_ANGLE_DOWN	-17.57f
 #define PULL_3508_ANGLE_UP 		-0.07f
 #define PULL_3508_P1				 	-8.60000038
 #define PULL_3508_P2 					-7.5
-
 
 
 //发射2006 角度环 角度由编码器 
@@ -160,24 +160,19 @@
 #define MOTOR_6020_ANGLE_PID_MAX_IOUT  10.0f
 
 //换弹6020的各个角度 , 以第一个发射角度为基准  最好每次上场前校准换弹角度
-#define RELOAD_6020_ANGLE0   -1.03919753 
-#define RELOAD_6020_ANGLE60  -2.05940008
-#define RELOAD_6020_ANGLE120 -3.1341975
-#define RELOAD_6020_ANGLE180 -4.09300023
-#define RELOAD_6020_ANGLE240 -5.2
-#define RELOAD_6020_ANGLE300 -6.23812056
-#define RELOAD_6020_ANGLE360 -7.30
+
+
 //60 180 300 是换弹角度,需要标定
 //设定6020敏感度(与设定角度差多少时可以开始下一次行动)
 #define DART_6020_SENSITIVE 0.2
 
 //舵机下降值
-#define SERVO_DOWN1 85
-#define SERVO_DOWN2 79
-#define SERVO_DOWN3 79
-#define SERVO_DOWN4 79
-#define SERVO_DOWN5 79
-#define SERVO_DOWN6 79
+#define SERVO_DOWN1 75
+#define SERVO_DOWN2 67
+#define SERVO_DOWN3 67
+#define SERVO_DOWN4 67
+#define SERVO_DOWN5 67
+#define SERVO_DOWN6 67
 
 
 //测试模式下定义为0，比赛模式下定义为1
@@ -187,11 +182,21 @@
 //自动换弹模式:只需要左上一次即可连发四次
 #define AUTO_RELOAD_TEST 	1
 #define FORCE_CONTROL 		0
-#define VIEW_NX 					1
+#define VIEW_NX 					0
 #define REFEREE_START 		0
 #define Reload_mode_test  0
-#define SHOOT_TIME_SET    3	//设定第一发结束后还要打多少次
+#define Use_raspberrypi   1
+#define SHOOT_TIME_SET    0	//设定第一发结束后还要打多少次
 //一个流程全部的标志位
+
+
+#define RELOAD_6020_ANGLE0  	-1.03919753 
+#define RELOAD_6020_ANGLE120 	-3.1341975
+#define RELOAD_6020_ANGLE240 	-5.2
+#define RELOAD_6020_ANGLE360 	-7.30
+
+
+
 typedef enum
 {
     SHOOT_STOP = 0,								//停止射击,现已被SHOOT_READY_3508_AND_2006替代
@@ -329,7 +334,6 @@ extern int16_t testCurrent2006;
 extern fp32 dart_2006_angle_set;
 extern float view_temp;
 extern float force_mv;
-extern uint8_t auto_start;
 extern uint8_t view_ok;
 extern uint8_t referee_game_start;
 

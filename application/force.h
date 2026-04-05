@@ -4,12 +4,14 @@
 #define RX_BITS 7
 #define TX_BITS 8
 
+#define Force_huart huart6
 void force_ini(void);
+void force_send(UART_HandleTypeDef *res_huart);
 
 
 void GetModbusCRC16(unsigned char *puchMsg, unsigned short usMsgLen,
 unsigned char *puchCRCLo, unsigned char *puchCRCHi);
-void force_rx_handler(void);
+void force_rx_handler(uint8_t * data);
 
 static const unsigned char auchCRCLo[]=
 {

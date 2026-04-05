@@ -52,6 +52,7 @@ osThreadId myTask02Handle;
 osThreadId myTask03Handle;
 osThreadId myTask04Handle;
 osThreadId myTask05Handle;
+osThreadId myTask06Handle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -63,6 +64,7 @@ void servo_reload(void const * argument);
 void get_force(void const * argument);
 void get_judge(void const * argument);
 void referee_usart_task(void const * argument);
+void usart_task(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -130,6 +132,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of myTask05 */
   osThreadDef(myTask05, referee_usart_task, osPriorityIdle, 0, 128);
   myTask05Handle = osThreadCreate(osThread(myTask05), NULL);
+
+  /* definition and creation of myTask06 */
+  osThreadDef(myTask06, usart_task, osPriorityIdle, 0, 228);
+  myTask06Handle = osThreadCreate(osThread(myTask06), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -227,6 +233,24 @@ __weak void referee_usart_task(void const * argument)
     osDelay(1);
   }
   /* USER CODE END referee_usart_task */
+}
+
+/* USER CODE BEGIN Header_usart_task */
+/**
+* @brief Function implementing the myTask06 thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_usart_task */
+__weak void usart_task(void const * argument)
+{
+  /* USER CODE BEGIN usart_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END usart_task */
 }
 
 /* Private application code --------------------------------------------------*/
