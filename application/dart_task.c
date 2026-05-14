@@ -38,7 +38,7 @@ uint16_t reloadPWM = 54;
 uint16_t upPWM = 52;
 uint16_t downPWM = 68;
 uint16_t lockPWM = 0x53;
-uint16_t unlockPWM = 0x22;                //1100   200   ´Ó´óµ½Ð¡  ÎªË³Ê±Õë
+uint16_t unlockPWM =  0x22;                //1100   200   ´Ó´óµ½Ð¡  ÎªË³Ê±Õë
 
 float PULL_3508_ANGLE_START = -1.f;
 
@@ -61,7 +61,7 @@ float PULL_3508_SPEED_SET ;
 fp32 ANGLE_SET_3508 = -5;
 fp32 ANGLE_SET_6020 = RELOAD_6020_ANGLE0; //-2.1000699988;//ÖÐÎ»
 
-
+int trg_test = 0x22;
 void dart_angle_clear(Motor_t* motor)    //Çå³ýµç»úµÄ½Ç¶ÈÖµ£¬ÕâÑùÎÒÃÇ¾Í¿ÉÒÔ½è¶Â×ª/ÏÞÎ»¿ª¹ØÉè¶¨³õÊ¼½Ç¶ÈÖµ
 {
 	  motor->round_cnt = 0;
@@ -90,7 +90,7 @@ float dart_6020_angle_set(uint8_t shoot_time,uint8_t step)
 		break;
 		
 		case 1:
-			if(step == SERVO_READY || step == SERVO_PULL)
+			if(step == SERVO_READY || step == SERVO_PULL || step == SERVO_UP)
 			{
 				return RELOAD_6020_ANGLE60;
 			}
@@ -100,7 +100,7 @@ float dart_6020_angle_set(uint8_t shoot_time,uint8_t step)
 			}
 		break;
 		case 2:
-			if(step == SERVO_READY || step == SERVO_PULL)
+			if(step == SERVO_READY || step == SERVO_PULL|| step == SERVO_UP)
 			{
 				return RELOAD_6020_ANGLE180;
 			}
@@ -110,7 +110,7 @@ float dart_6020_angle_set(uint8_t shoot_time,uint8_t step)
 			}
 		break;
 		case 3:
-			if(step == SERVO_READY || step == SERVO_PULL)
+			if(step == SERVO_READY || step == SERVO_PULL|| step == SERVO_UP)
 			{
 				return RELOAD_6020_ANGLE300;
 			}
@@ -316,6 +316,8 @@ void shoot_flag_renew(dart_control_t *shoot_flag_renew)      //ÔÚÕâ¸öº¯ÊýÖÐÉèÖÃ±
 				shoot_flag_renew->Dart_motor_wait_turn = 0;			//µÈ´ýµç»ú¾ÍÐ÷
 				PULL_3508_SPEED_SET = RESET_3508_SPEED_SET_SLOW;//ÉèÖÃ3508¸´½øËÙ¶È
 				ANGLE_SET_6020 = RELOAD_6020_ANGLE0;						//Éè¶¨6020½Ç¶ÈÎª³õÊ¼½Ç¶È
+				
+				shoot_flag_renew->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT;
 		}
 		else
 		{				

@@ -3,6 +3,7 @@
 #include "freertos.h"
 #include "raspberrypi.h"
 #include "force.h"
+#include "dart_task.h"
 
 extern UART_HandleTypeDef huart1;  //Ê÷Ý®ÅÉÓÃµÄ´®¿Ú
 extern UART_HandleTypeDef huart6;
@@ -15,8 +16,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
 	if(huart == &huart1)
 	{
+		#if Use_raspberrypi
 		rasp_unpack(usart_rx_data_rasp);
-
+		#endif
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart1,usart_rx_data_rasp,20);
 	}
 	if(huart == &huart6)

@@ -39,12 +39,14 @@
 #define SHOOT_MODE_CHANNEL 1
 
 /*********************   一些等待时间   ********************/
-#define dart_servo_lock_ready  10            //等待下拉到位后自锁
-#define dart_lock_ready 			 280						//等待舵机自锁
-#define dart_shoot_wait 		900										//等待发射结束
+#define dart_servo_lock_ready  60            //等待下拉到位后自锁
+#define dart_lock_ready 			 380						//等待舵机自锁
+#define dart_shoot_wait 		1800										//等待发射结束
+
 #define dart_down_ready1   400								//等待舵机下降
-#define dart_down_ready2   470	
-#define dart_turn_ready   1200								//等待6020到位
+#define dart_down_ready2   470								//等待舵机上升
+#define dart_turn_ready   2300								//等待6020到位
+
 #define dart_yaw_ready   	250									//yaw堵转复位时间
 #define dart_Bullet_ready  80
 #define dart_3508_reset   75									//等待3508复位
@@ -77,20 +79,20 @@
 
 //3508 角度环 角度由编码器 
 #define BULLET_3508_ANGLE_PID_KP        400.3f
-#define BULLET_3508_ANGLE_PID_KI        0.00001f
+#define BULLET_3508_ANGLE_PID_KI        0.001f
 #define BULLET_3508_ANGLE_PID_KD        0.001f
 #define BULLET_3508_ANGLE_PID_MAX_OUT   600.0f
-#define BULLET_3508_ANGLE_PID_MAX_IOUT  20.0f
+#define BULLET_3508_ANGLE_PID_MAX_IOUT  120.0f
 
 //设定3508敏感值
-#define DART_3508_SENSITIVE 0.09 
+#define DART_3508_SENSITIVE 0.08 
 
 //上弹3508的角度
 #define PULL_3508_ANGLE_START_SET -1
-#define PULL_3508_ANGLE_DOWN	-17.57f
-#define PULL_3508_ANGLE_UP 		-0.07f
-#define PULL_3508_P1				 	-8.60000038
-#define PULL_3508_P2 					-7.5
+#define PULL_3508_ANGLE_DOWN	-17.45f
+#define PULL_3508_ANGLE_UP 		-0.09f
+#define PULL_3508_P1				 	-8.80000038
+#define PULL_3508_P2 					-7.65
 
 
 //发射2006 角度环 角度由编码器 
@@ -135,17 +137,19 @@
 #define DART_YAW_SENSITIVE 4
 
 
-#define YAW_VIEW_ANGLE_PID_KP        0.9f
-#define YAW_VIEW_ANGLE_PID_KI        0.300f
+#define YAW_VIEW_ANGLE_PID_KP        0.6f
+#define YAW_VIEW_ANGLE_PID_KI        0.0000f
 #define YAW_VIEW_ANGLE_PID_KD        0.0006f // 0,7
-#define YAW_VIEW_ANGLE_PID_MAX_OUT   30 //2.0f
+#define YAW_VIEW_ANGLE_PID_MAX_OUT   5 //2.0f
 #define YAW_VIEW_ANGLE_PID_MAX_IOUT  4.0f
 //yaw 速度环
-#define YAW_VIEW_GYRO_PID_KP        350.0f
+#define YAW_VIEW_GYRO_PID_KP        4500.0f
 #define YAW_VIEW_GYRO_PID_KI        0.00000f
-#define YAW_VIEW_GYRO_PID_KD        0.0004f
+#define YAW_VIEW_GYRO_PID_KD        0.02f
 #define YAW_VIEW_GYRO_PID_MAX_OUT   30000.0f
 #define YAW_VIEW_GYRO_PID_MAX_IOUT  3000.0f
+
+//yaw轴视觉pid待测试.感觉不是很准
 
 #define MOTOR_6020_GYRO_PID_KP        1500.0f
 #define MOTOR_6020_GYRO_PID_KI        0.000f
@@ -186,7 +190,7 @@
 #define REFEREE_START 		0
 #define Reload_mode_test  0
 #define Use_raspberrypi   1
-#define SHOOT_TIME_SET    0	//设定第一发结束后还要打多少次
+#define SHOOT_TIME_SET    2	//设定第一发结束后还要打多少次
 //一个流程全部的标志位
 
 
