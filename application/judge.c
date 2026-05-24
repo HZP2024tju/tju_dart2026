@@ -29,29 +29,29 @@ uint8_t shoot_time_last = 0;
 
 float judge_arr[5];
 
-float judge_bias1 = -80.5 ; //170       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+float judge_bias1 = -120.1 ; //170       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 
-float judge_bias2 = -170.6;//            //Yaw -97    //0.4约为半个装甲板
+float judge_bias2 = -123.6;// -38.7           //Yaw -97    //0.7约为半个装甲板
 
-float judge_bias3 = -170.5; //-83,9   
+float judge_bias3 = -121.79; //-83,9   
 
-float judge_bias4 = -170.7;
+float judge_bias4 = -123.7;
 
-float judge_bias5 = -166.2;    //
+float judge_bias5 = -125.3;    //
 
 float judge_bias6 = -74.44 ;  //6 4 5距离相似
 
  
 
-float judge_view_bias1 =  -0.0062  ;      //越小越左  0.007 约为一个装甲板           //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+float judge_view_bias1 =  -0.0102  ;      //越小越左  0.003 约为一个装甲板           //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 
-float judge_view_bias2 =	-0.012;    //0x0229     
+float judge_view_bias2 =	-0.013;    //0x0229     
 
-float judge_view_bias3 = -0.010;//-0.0170    
+float judge_view_bias3 = -0.0132;//-0.0170    
 
-float judge_view_bias4 = -0.0073;
+float judge_view_bias4 = -0.0162;
 
-float judge_view_bias5 = -0.013;    //0.0189
+float judge_view_bias5 = -0.0162;    //0.0189
 
 float judge_view_bias6 = -0.0; //0.0257
 

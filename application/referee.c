@@ -20,8 +20,6 @@ game_status_t dart_message4;                  //读取比赛阶段
 uint8_t dart_door = 0;
 uint8_t dart_door_last = 0;
 
-uint8_t referee_door_open = 0;
-
 uint8_t referee_game_start = 0;
 
 //与裁判系统通信初始化
@@ -40,31 +38,21 @@ void referee_auto()
 	
 #if REFEREE_START
 	dart_door = dart_message2.dart_launch_opening_status;
-	referee_game_start = dart_message4.game_progress;
+	referee_game_start = dart_message4.game_progress;  //通过0x0001的消息来查看当前比赛状态
 
 
 	if(referee_game_start == 4 )
 	{
-		#if FourMode
-		if(((dart_door_last == 2) && (dart_door  == 0))    || (dart_message3.dart_remaining_time == 18))  
+
+		if(((dart_door_last == 2) && (dart_door  == 0))    || (dart_message3.dart_remaining_time == 28))  
 		{
-		auto_start = 1;
-		}
-		#endif
-		
-		if(((dart_door_last == 2) && (dart_door  == 0))    || (dart_message3.dart_remaining_time == 18))  
-		{
-		auto_start = 1;
+		auto_start = 1;                //闸门从正在开启到已经开启时,启动发射
 		}
 		
-		if((dart_door_last == 2) && (dart_door  == 0))
-		{
-		referee_door_open = 1;
-		}
 	}
 	
 #else
-		if(((dart_door_last == 1) && (dart_door  == 2))    || (dart_message3.dart_remaining_time == 18))  
+		if(((dart_door_last == 2) && (dart_door  == 0))    || (dart_message3.dart_remaining_time == 28))  
 	{
 		auto_start = 1;
 	}
@@ -93,7 +81,7 @@ void referee_data_solve(uint8_t *frame)
 			
 			case 0x0201:
 			{
-			 memcpy(&dart_message1, frame + index, sizeof(robot_status_t));
+			 memcpy(&dart_message1, frame + index, sizeof(robot_status_t));//暂时没用上其实
 				break;
 			}
 

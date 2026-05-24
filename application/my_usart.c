@@ -21,11 +21,6 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 		#endif
 		HAL_UARTEx_ReceiveToIdle_DMA(&huart1,usart_rx_data_rasp,20);
 	}
-	if(huart == &huart6)
-	{
-		
-	}
-	
 }
 
 

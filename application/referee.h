@@ -1,7 +1,7 @@
 #ifndef REFEREE_H
 #define REFEREE_H
 #include "main.h"
-typedef __packed struct fuckyou
+typedef __packed struct
 {
   uint8_t SOF;
   uint16_t data_length;
@@ -50,7 +50,7 @@ typedef __packed struct
   uint8_t power_management_gimbal_output : 1; 
   uint8_t power_management_chassis_output : 1;  
   uint8_t power_management_shooter_output : 1; 
-}robot_status_t; 
+}robot_status_t;                            //0x0201
 
 
 typedef __packed struct            //0x020A 

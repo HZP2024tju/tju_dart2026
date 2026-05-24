@@ -396,11 +396,6 @@
               <FilePath>..\Components\fifo.c</FilePath>
             </File>
             <File>
-              <FileName>referee.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\application\referee.c</FilePath>
-            </File>
-            <File>
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Core/Src/main.c</FilePath>
@@ -500,6 +495,11 @@
         <Group>
           <GroupName>application</GroupName>
           <Files>
+            <File>
+              <FileName>referee.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\application\referee.c</FilePath>
+            </File>
             <File>
               <FileName>CAN_receive.c</FileName>
               <FileType>1</FileType>

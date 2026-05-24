@@ -71,14 +71,14 @@
 #define RELOAD_2006_RESET_SPEED_SET	 -20.0f
 
 //3508速度环pid
-#define MOTOR_3508_GYRO_PID_KP 200.0f
+#define MOTOR_3508_GYRO_PID_KP 210.0f
 #define MOTOR_3508_GYRO_PID_KI 0.0001f  
 #define MOTOR_3508_GYRO_PID_KD 0.01f	 
-#define MOTOR_3508_GYRO_PID_MAX_OUT  16383.0f
+#define MOTOR_3508_GYRO_PID_MAX_OUT  16383.0f   //一定不能大于这个
 #define MOTOR_3508_GYRO_PID_MAX_IOUT 2000.0f
 
 //3508 角度环 角度由编码器 
-#define BULLET_3508_ANGLE_PID_KP        400.3f
+#define BULLET_3508_ANGLE_PID_KP        800.3f
 #define BULLET_3508_ANGLE_PID_KI        0.001f
 #define BULLET_3508_ANGLE_PID_KD        0.001f
 #define BULLET_3508_ANGLE_PID_MAX_OUT   600.0f
@@ -89,10 +89,10 @@
 
 //上弹3508的角度
 #define PULL_3508_ANGLE_START_SET -1
-#define PULL_3508_ANGLE_DOWN	-17.45f
-#define PULL_3508_ANGLE_UP 		-0.09f
+#define PULL_3508_ANGLE_DOWN	-17.47f
+#define PULL_3508_ANGLE_UP 		-0.02f
 #define PULL_3508_P1				 	-8.80000038
-#define PULL_3508_P2 					-7.65
+#define PULL_3508_P2 					-7.6
 
 
 //发射2006 角度环 角度由编码器 
@@ -131,7 +131,7 @@
 #define YAW_GYRO_PID_KP        3000.0f
 #define YAW_GYRO_PID_KI        0.00000f
 #define YAW_GYRO_PID_KD        0.001f
-#define YAW_GYRO_PID_MAX_OUT   6000.0f
+#define YAW_GYRO_PID_MAX_OUT   16000.0f
 #define YAW_GYRO_PID_MAX_IOUT  3000.0f
 
 #define DART_YAW_SENSITIVE 4
@@ -146,37 +146,37 @@
 #define YAW_VIEW_GYRO_PID_KP        4500.0f
 #define YAW_VIEW_GYRO_PID_KI        0.00000f
 #define YAW_VIEW_GYRO_PID_KD        0.02f
-#define YAW_VIEW_GYRO_PID_MAX_OUT   30000.0f
+#define YAW_VIEW_GYRO_PID_MAX_OUT   16000.0f
 #define YAW_VIEW_GYRO_PID_MAX_IOUT  3000.0f
 
 //yaw轴视觉pid待测试.感觉不是很准
 
-#define MOTOR_6020_GYRO_PID_KP        1500.0f
+#define MOTOR_6020_GYRO_PID_KP        1200.0f
 #define MOTOR_6020_GYRO_PID_KI        0.000f
-#define MOTOR_6020_GYRO_PID_KD        0.000200f
-#define MOTOR_6020_GYRO_PID_MAX_OUT   60000.0f
+#define MOTOR_6020_GYRO_PID_KD        0.00200f
+#define MOTOR_6020_GYRO_PID_MAX_OUT   16000.0f
 #define MOTOR_6020_GYRO_PID_MAX_IOUT  7000.0f
 
-#define MOTOR_6020_ANGLE_PID_KP        55.6f
-#define MOTOR_6020_ANGLE_PID_KI        0.00008f
-#define MOTOR_6020_ANGLE_PID_KD        0.00001f
-#define MOTOR_6020_ANGLE_PID_MAX_OUT   6.5f
-#define MOTOR_6020_ANGLE_PID_MAX_IOUT  10.0f
+#define MOTOR_6020_ANGLE_PID_KP        109.6f
+#define MOTOR_6020_ANGLE_PID_KI        0.0008f
+#define MOTOR_6020_ANGLE_PID_KD        0.0001f
+#define MOTOR_6020_ANGLE_PID_MAX_OUT   4.50f
+#define MOTOR_6020_ANGLE_PID_MAX_IOUT  1.0f
 
 //换弹6020的各个角度 , 以第一个发射角度为基准  最好每次上场前校准换弹角度
 
 
 //60 180 300 是换弹角度,需要标定
 //设定6020敏感度(与设定角度差多少时可以开始下一次行动)
-#define DART_6020_SENSITIVE 0.2
+#define DART_6020_SENSITIVE 0.1
 
 //舵机下降值
-#define SERVO_DOWN1 75
-#define SERVO_DOWN2 67
-#define SERVO_DOWN3 67
-#define SERVO_DOWN4 67
-#define SERVO_DOWN5 67
-#define SERVO_DOWN6 67
+#define SERVO_DOWN1 74
+#define SERVO_DOWN2 74
+#define SERVO_DOWN3 74
+#define SERVO_DOWN4 74
+#define SERVO_DOWN5 74
+#define SERVO_DOWN6 74
 
 
 //测试模式下定义为0，比赛模式下定义为1
@@ -186,11 +186,12 @@
 //自动换弹模式:只需要左上一次即可连发四次
 #define AUTO_RELOAD_TEST 	1
 #define FORCE_CONTROL 		0
-#define VIEW_NX 					0
+#define VIEW_NX 					1
 #define REFEREE_START 		0
-#define Reload_mode_test  0
 #define Use_raspberrypi   1
-#define SHOOT_TIME_SET    2	//设定第一发结束后还要打多少次
+#define SHOOT_TIME_SET    0	//设定第一发结束后还要打多少次 不可以多于三次
+
+#define USE_MISSLE 0
 //一个流程全部的标志位
 
 
@@ -344,7 +345,6 @@ extern uint8_t referee_game_start;
 extern uint8_t view_reflash;
 extern float view_bias;
 
-extern uint8_t referee_door_open;
 void dart_auto_reload(dart_control_t * dart_reload,int last_switch) ;
 void dart_angle_clear(Motor_t* motor); 
 int dart_motor_check(Motor_t* motor,float target_angle,float sensitive);  //检测电机是否转到指定角度,需要设定敏感值

@@ -47,7 +47,7 @@ void rasp_control(dart_control_t *dart_control)
 	//裁判系统规定开始比赛时禁用调参,开始发射后禁用调参
 	if(
 #if REFEREE_START	
-	uint8_t referee_game_start !=4 || 
+	uint8_t referee_game_start ==4 || 
 #endif
 	dart_control->Shoot_Mode != SHOOT_READY_3508_AND_2006 || auto_start == 1)
 	{

@@ -23,9 +23,8 @@ static void dart_control_loop(dart_control_t *control_loop);
 extern game_status_t dart_message4;  
 
 float	 RELOAD_6020_ANGLE60  = -2.05940008;
-float  RELOAD_6020_ANGLE180 = -4.09300023;
+float  RELOAD_6020_ANGLE180 = -4.12500023;
 float  RELOAD_6020_ANGLE300 = -6.23812056;
-
 
 dart_control_t dart_control;
 int16_t Motor1_3508_Current;
@@ -35,7 +34,7 @@ int16_t testCurrent3508;
 int16_t testCurrent2006;
 uint16_t triggerPWM	=	0;
 uint16_t reloadPWM = 54;
-uint16_t upPWM = 52;
+uint16_t upPWM = 50;
 uint16_t downPWM = 68;
 uint16_t lockPWM = 0x53;
 uint16_t unlockPWM =  0x22;                //1100   200   从大到小  为顺时针
@@ -49,9 +48,6 @@ fp32 Yaw_Angle = -70;//-70;//-85;               //修改Yaw轴方向,越负越往右
 
 uint8_t force_start = 0;
 float force_mv_set = 450.f;              //25m约为 450mv       5mv正好是高出一个大装甲板的距离     3mv一个小装甲板
-
-
-uint32_t force_OK_count = 0;             //-50.6843452
 
 uint8_t auto_start_last;
 uint8_t auto_start = 0;
@@ -423,8 +419,8 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //只在这个函数中设
 			
 			case SHOOT_RELOADING:
 
-				if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.flag == 1)
-					{
+				if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.flag == 1 || (dart_motor_check(&shoot_set_mode->Dart_3508_Motor,shoot_set_mode->Dart_3508_Motor.angle_set,DART_3508_SENSITIVE) && shoot_set_mode->dart_reload_step == SERVO_PULL) )
+					{					//如果按到限位开关或者电机到位了就开始锁定
 									shoot_set_mode->Dart_Flag.bottomLimitSwitch.count ++;
 							if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.count > dart_servo_lock_ready/DART_CONTROL_TIME)
 							{
@@ -438,7 +434,6 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //只在这个函数中设
 											shoot_set_mode->Dart_Flag.bottomLimitSwitch.count = 0;
 							}						
 					}		
-
 			break;
 			
 			case SHOOT_FINISH_PULL:
@@ -627,7 +622,7 @@ void dart_set_control(dart_control_t *set_control)                //规定只在此处
 						}
 						else if(set_control->dart_reload_step == SERVO_UP)
 						{
-								
+								set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT/5;       //不能上升太快,不然在力度大的情况下同步带脱齿,3508定位不准
 								ANGLE_SET_3508 = PULL_3508_P2;
 								if(dart_motor_check(&set_control->Dart_3508_Motor,ANGLE_SET_3508,DART_3508_SENSITIVE))
 								{
@@ -635,6 +630,7 @@ void dart_set_control(dart_control_t *set_control)                //规定只在此处
 										set_control->Dart_servo_wait_down++;
 										if(set_control->Dart_servo_wait_down > dart_down_ready2/DART_CONTROL_TIME)							//等待舵机
 										{
+											  set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT;
 												ANGLE_SET_3508 = PULL_3508_ANGLE_DOWN;                 //开始下拉
 												set_control->Dart_servo_wait_down = 0;									
 												set_control->dart_reload_step = SERVO_PULL;   //不再重入此函数
@@ -845,21 +841,15 @@ void dart_auto_reload(dart_control_t * dart_reload,int last_switch)             
 					}
 
 											
-					if(dart_reload->Shoot_Mode == SHOOT_READY_BULLET 
-#if REFEREE_START	
-					&& referee_door_open == 1
-
-#endif
-						)
+					if(dart_reload->Shoot_Mode == SHOOT_READY_BULLET )
 					            //如果完成换弹或者为第一次发射就直接发射
 					{					
 							dart_reload->Shoot_Mode = SHOOT_BULLET;
-							referee_door_open = 0;						           //发射结束后置开门标志位为零
 					}
 					
 							
 		}
-							auto_start_last = auto_start;
+		auto_start_last = auto_start;
 
 }
 
