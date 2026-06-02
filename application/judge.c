@@ -28,32 +28,31 @@ uint8_t judge_rx[10];
 uint8_t shoot_time_last = 0;
 
 float judge_arr[5];
-
-float judge_bias1 = -120.1 ; //170       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
-
-float judge_bias2 = -123.6;// -38.7           //Yaw -97    //0.7约为半个装甲板
-
-float judge_bias3 = -121.79; //-83,9   
-
-float judge_bias4 = -123.7;
-
-float judge_bias5 = -125.3;    //
-
-float judge_bias6 = -74.44 ;  //6 4 5距离相似
-
  
+float judge_bias1 = -47.3;//-47.89 ; //-27.6       // Yaw -98                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
 
-float judge_view_bias1 =  -0.0102  ;      //越小越左  0.003 约为一个装甲板           //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+float judge_bias2 = -47.9;// -20.7          //Yaw -97    //0.7约为半个装甲板
 
-float judge_view_bias2 =	-0.013;    //0x0229     
+float judge_bias3 = -47.9; //-20.7   
 
-float judge_view_bias3 = -0.0132;//-0.0170    
+float judge_bias4 = -48.3;  //-20.7
 
-float judge_view_bias4 = -0.0162;
+float judge_bias5 = -48.7;    //
 
-float judge_view_bias5 = -0.0162;    //0.0189
+float judge_bias6 = -48.2 ;  //6 4 5距离相似
 
-float judge_view_bias6 = -0.0; //0.0257
+
+float judge_view_bias1 =  -0.000;// -0.007  ;      //越小越左  0.003 约为一个装甲板           //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
+
+float judge_view_bias2 =	0.002;    //0x0229     
+
+float judge_view_bias3 =  0.001 ;//    
+
+float judge_view_bias4 =  -0.002;
+
+float judge_view_bias5 =  -0.001 ;    //0.0189
+
+float judge_view_bias6 =  0.001; //0.0257
 
 
 float judge_mv_bias1 = 366.4  ;                 //[1]     = [4]   |       [1]   +  1.5   =   [3]     |   [1]  +  2   =  [5]     |  [1]  - 0.5     =[6] (?)         ;
@@ -71,7 +70,7 @@ uint8_t judge_lable = 0;
 /***** 在这里设定发射顺序 *******/
 void judge_set_shoot(uint8_t shoot_time)
 {
-		judge_shoot_angle(1,2,3,4,shoot_time);  	//          
+		judge_shoot_angle(3,4,5,6,shoot_time);  	//          
 }
 /***** 在这里设定发射顺序 *******/
 

@@ -11,7 +11,6 @@ extern UART_HandleTypeDef huart6;
 extern float force;
 uint8_t usart_rx_data_rasp[20];
 
-
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 {
 	if(huart == &huart1)
@@ -31,7 +30,6 @@ void usart_task(void const * argument)
 	while(1)
 	{
 		force_send(&huart1);
-		osDelay(100);
-		
+		osDelay(100);		
 	}
 }

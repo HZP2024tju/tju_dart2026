@@ -191,177 +191,182 @@
         <Ww>
           <count>6</count>
           <WinNumber>1</WinNumber>
-          <ItemText>referee_door_open</ItemText>
+          <ItemText>dart_message2</ItemText>
         </Ww>
         <Ww>
           <count>7</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dart_message2</ItemText>
+          <ItemText>dart_message4</ItemText>
         </Ww>
         <Ww>
           <count>8</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dart_message4</ItemText>
+          <ItemText>judge_bias5</ItemText>
         </Ww>
         <Ww>
           <count>9</count>
           <WinNumber>1</WinNumber>
-          <ItemText>judge_bias5</ItemText>
+          <ItemText>Yaw_Angle</ItemText>
         </Ww>
         <Ww>
           <count>10</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Yaw_Angle</ItemText>
+          <ItemText>dart_message1</ItemText>
         </Ww>
         <Ww>
           <count>11</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dart_message1</ItemText>
+          <ItemText>view_bias</ItemText>
         </Ww>
         <Ww>
           <count>12</count>
           <WinNumber>1</WinNumber>
-          <ItemText>view_bias</ItemText>
+          <ItemText>PULL_3508_SPEED_SET</ItemText>
         </Ww>
         <Ww>
           <count>13</count>
           <WinNumber>1</WinNumber>
-          <ItemText>PULL_3508_SPEED_SET</ItemText>
+          <ItemText>view_bias</ItemText>
         </Ww>
         <Ww>
           <count>14</count>
           <WinNumber>1</WinNumber>
-          <ItemText>view_bias</ItemText>
+          <ItemText>ANGLE_SET_3508</ItemText>
         </Ww>
         <Ww>
           <count>15</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ANGLE_SET_3508</ItemText>
+          <ItemText>ANGLE_SET_6020</ItemText>
         </Ww>
         <Ww>
           <count>16</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ttt</ItemText>
+          <ItemText>dart_2006_angle_set</ItemText>
         </Ww>
         <Ww>
           <count>17</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ttt1</ItemText>
+          <ItemText>reloadPWM</ItemText>
         </Ww>
         <Ww>
           <count>18</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ANGLE_SET_6020</ItemText>
+          <ItemText>PULL_3508_ANGLE_START</ItemText>
         </Ww>
         <Ww>
           <count>19</count>
           <WinNumber>1</WinNumber>
-          <ItemText>dart_2006_angle_set</ItemText>
+          <ItemText>Motor_Yaw_Current</ItemText>
         </Ww>
         <Ww>
           <count>20</count>
           <WinNumber>1</WinNumber>
-          <ItemText>reloadPWM</ItemText>
+          <ItemText>judge_view_bias1</ItemText>
         </Ww>
         <Ww>
           <count>21</count>
           <WinNumber>1</WinNumber>
-          <ItemText>PULL_3508_ANGLE_START</ItemText>
+          <ItemText>rasp_data</ItemText>
         </Ww>
         <Ww>
           <count>22</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Motor_Yaw_Current</ItemText>
+          <ItemText>judge_bias1</ItemText>
         </Ww>
         <Ww>
           <count>23</count>
           <WinNumber>1</WinNumber>
-          <ItemText>\\Dart\../application/referee.c\referee_door_open</ItemText>
+          <ItemText>judge_view_bias1</ItemText>
         </Ww>
         <Ww>
           <count>24</count>
           <WinNumber>1</WinNumber>
-          <ItemText>judge_view_bias1</ItemText>
+          <ItemText>RELOAD_6020_ANGLE60</ItemText>
         </Ww>
         <Ww>
           <count>25</count>
           <WinNumber>1</WinNumber>
-          <ItemText>\\Dart\../application/referee.c\referee_door_open</ItemText>
+          <ItemText>rasp_cmd</ItemText>
         </Ww>
         <Ww>
           <count>26</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rasp_data</ItemText>
+          <ItemText>\\Dart\../application/dart_task.c\dart_control.Dwt_Count</ItemText>
         </Ww>
         <Ww>
           <count>27</count>
           <WinNumber>1</WinNumber>
-          <ItemText>force_mv</ItemText>
+          <ItemText>trg_test</ItemText>
         </Ww>
         <Ww>
           <count>28</count>
           <WinNumber>1</WinNumber>
-          <ItemText>force_rx_ok</ItemText>
+          <ItemText>judge_bias1</ItemText>
         </Ww>
         <Ww>
           <count>29</count>
           <WinNumber>1</WinNumber>
-          <ItemText>force_rx_arr</ItemText>
+          <ItemText>judge_view_bias1</ItemText>
         </Ww>
         <Ww>
           <count>30</count>
           <WinNumber>1</WinNumber>
-          <ItemText>judge_bias1</ItemText>
+          <ItemText>view_temp</ItemText>
         </Ww>
         <Ww>
           <count>31</count>
           <WinNumber>1</WinNumber>
-          <ItemText>judge_view_bias1</ItemText>
+          <ItemText>RELOAD_6020_ANGLE180</ItemText>
         </Ww>
         <Ww>
           <count>32</count>
           <WinNumber>1</WinNumber>
-          <ItemText>RELOAD_6020_ANGLE60</ItemText>
+          <ItemText>referee_unpack_obj</ItemText>
         </Ww>
         <Ww>
           <count>33</count>
           <WinNumber>1</WinNumber>
-          <ItemText>rasp_cmd</ItemText>
+          <ItemText>referee_fifo</ItemText>
         </Ww>
         <Ww>
           <count>34</count>
           <WinNumber>1</WinNumber>
-          <ItemText>\\Dart\../application/dart_task.c\dart_control.Dwt_Count</ItemText>
+          <ItemText>byte_check</ItemText>
         </Ww>
         <Ww>
           <count>35</count>
           <WinNumber>1</WinNumber>
-          <ItemText>trg_test</ItemText>
+          <ItemText>dart_message3</ItemText>
         </Ww>
         <Ww>
           <count>36</count>
           <WinNumber>1</WinNumber>
-          <ItemText>judge_bias1</ItemText>
+          <ItemText>Yaw_Angle</ItemText>
         </Ww>
         <Ww>
           <count>37</count>
           <WinNumber>1</WinNumber>
-          <ItemText>judge_view_bias1</ItemText>
+          <ItemText>judge_bias2</ItemText>
         </Ww>
         <Ww>
           <count>38</count>
           <WinNumber>1</WinNumber>
-          <ItemText>view</ItemText>
+          <ItemText>judge_bias3</ItemText>
         </Ww>
         <Ww>
           <count>39</count>
           <WinNumber>1</WinNumber>
-          <ItemText>view_temp</ItemText>
+          <ItemText>RELOAD_6020_ANGLE180</ItemText>
         </Ww>
         <Ww>
           <count>40</count>
           <WinNumber>1</WinNumber>
-          <ItemText>RELOAD_6020_ANGLE180</ItemText>
+          <ItemText>dart_2006_angle_set</ItemText>
+        </Ww>
+        <Ww>
+          <count>41</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>view_bias</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

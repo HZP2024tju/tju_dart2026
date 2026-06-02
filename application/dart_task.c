@@ -22,9 +22,9 @@ static void dart_control_loop(dart_control_t *control_loop);
 
 extern game_status_t dart_message4;  
 
-float	 RELOAD_6020_ANGLE60  = -2.05940008;
+float	 RELOAD_6020_ANGLE60  = -2.03540039;
 float  RELOAD_6020_ANGLE180 = -4.12500023;
-float  RELOAD_6020_ANGLE300 = -6.23812056;
+float  RELOAD_6020_ANGLE300 = -6.22912073;
 
 dart_control_t dart_control;
 int16_t Motor1_3508_Current;
@@ -35,22 +35,25 @@ int16_t testCurrent2006;
 uint16_t triggerPWM	=	0;
 uint16_t reloadPWM = 54;
 uint16_t upPWM = 50;
-uint16_t downPWM = 68;
+uint16_t downPWM = 74;
 uint16_t lockPWM = 0x53;
 uint16_t unlockPWM =  0x22;                //1100   200   ´Ó´óµ½Ð¡  ÎªË³Ê±Õë
 
 float PULL_3508_ANGLE_START = -1.f;
 
-float dart_2006_angle_set = -170.0;//-200                    //       46.8469658        3  -50.5     5    -52            1  61.3     3 - 59.5        5 - 61     6  -61             3 -57.8  5  -59.4      6   -57.5    2 -56.8;                       //     5  73   3   71.4;3ºÍ5ºÅ¿ÉÒÔÈÏÎªÒ»ÖÂ
+float dart_2006_angle_set = -44.2;//-200                    //       46.8469658        3  -50.5     5    -52            1  61.3     3 - 59.5        5 - 61     6  -61             3 -57.8  5  -59.4      6   -57.5    2 -56.8;                       //     5  73   3   71.4;3ºÍ5ºÅ¿ÉÒÔÈÏÎªÒ»ÖÂ
 																			
 //-4 Ô¼Îª35cm  bias
-fp32 Yaw_Angle = -70;//-70;//-85;               //ÐÞ¸ÄYawÖá·½Ïò,Ô½¸ºÔ½ÍùÓÒ
+fp32 Yaw_Angle = -87.38;//-70;//-85;               //ÐÞ¸ÄYawÖá·½Ïò,Ô½¸ºÔ½ÍùÓÒ
 
 uint8_t force_start = 0;
 float force_mv_set = 450.f;              //25mÔ¼Îª 450mv       5mvÕýºÃÊÇ¸ß³öÒ»¸ö´ó×°¼×°åµÄ¾àÀë     3mvÒ»¸öÐ¡×°¼×°å
 
 uint8_t auto_start_last;
 uint8_t auto_start = 0;
+uint8_t auto_start_once = 0;
+
+uint8_t dart_target = 1;   //Ç°ÉÚÎª0 »ùµØÎª1
 
 float PULL_3508_SPEED_SET ;
 
@@ -58,6 +61,7 @@ fp32 ANGLE_SET_3508 = -5;
 fp32 ANGLE_SET_6020 = RELOAD_6020_ANGLE0; //-2.1000699988;//ÖÐÎ»
 
 int trg_test = 0x22;
+
 void dart_angle_clear(Motor_t* motor)    //Çå³ýµç»úµÄ½Ç¶ÈÖµ£¬ÕâÑùÎÒÃÇ¾Í¿ÉÒÔ½è¶Â×ª/ÏÞÎ»¿ª¹ØÉè¶¨³õÊ¼½Ç¶ÈÖµ
 {
 	  motor->round_cnt = 0;
@@ -306,11 +310,11 @@ void shoot_flag_renew(dart_control_t *shoot_flag_renew)      //ÔÚÕâ¸öº¯ÊýÖÐÉèÖÃ±
 				shoot_flag_renew->Shoot_Time = 0;
 				auto_start = 0;
 				force_start = 0;
+				auto_start_once = 0;
 				
 				shoot_flag_renew->dart_reload_step = SERVO_READY;//»»µ¯±êÖ¾Î»ÖØÖÃ
 				shoot_flag_renew->Dart_servo_wait_down = 0;     //µÈ´ý¶æ»úÏÂ½µ¼ÆÊ±
 				shoot_flag_renew->Dart_motor_wait_turn = 0;			//µÈ´ýµç»ú¾ÍÐ÷
-				PULL_3508_SPEED_SET = RESET_3508_SPEED_SET_SLOW;//ÉèÖÃ3508¸´½øËÙ¶È
 				ANGLE_SET_6020 = RELOAD_6020_ANGLE0;						//Éè¶¨6020½Ç¶ÈÎª³õÊ¼½Ç¶È
 				
 				shoot_flag_renew->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT;
@@ -419,7 +423,7 @@ void shoot_set_mode(dart_control_t *shoot_set_mode)           //Ö»ÔÚÕâ¸öº¯ÊýÖÐÉè
 			
 			case SHOOT_RELOADING:
 
-				if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.flag == 1 || (dart_motor_check(&shoot_set_mode->Dart_3508_Motor,shoot_set_mode->Dart_3508_Motor.angle_set,DART_3508_SENSITIVE) && shoot_set_mode->dart_reload_step == SERVO_PULL) )
+				if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.flag == 1 || (dart_motor_check(&shoot_set_mode->Dart_3508_Motor,shoot_set_mode->Dart_3508_Motor.angle_set,DART_3508_SENSITIVE ) && shoot_set_mode->dart_reload_step == SERVO_PULL) )
 					{					//Èç¹û°´µ½ÏÞÎ»¿ª¹Ø»òÕßµç»úµ½Î»ÁË¾Í¿ªÊ¼Ëø¶¨
 									shoot_set_mode->Dart_Flag.bottomLimitSwitch.count ++;
 							if(shoot_set_mode->Dart_Flag.bottomLimitSwitch.count > dart_servo_lock_ready/DART_CONTROL_TIME)
@@ -584,7 +588,7 @@ void dart_set_control(dart_control_t *set_control)                //¹æ¶¨Ö»ÔÚ´Ë´¦
 						ANGLE_SET_3508 = PULL_3508_ANGLE_START;
 				break;
 				case SHOOT_UPING:
-					set_control->Dart_3508_Motor.speed_set =  100;
+					set_control->Dart_3508_Motor.speed_set =  UP_3508_SPEED_SET;
 					break;
 				
 				case SHOOT_RELOADING:
@@ -593,7 +597,7 @@ void dart_set_control(dart_control_t *set_control)                //¹æ¶¨Ö»ÔÚ´Ë´¦
 					ANGLE_SET_6020 = dart_6020_angle_set(set_control->Shoot_Time,set_control->dart_reload_step); 
 					if(set_control->Shoot_Time == 0)
 					{
-							ANGLE_SET_3508 = PULL_3508_ANGLE_DOWN;
+							set_control->dart_reload_step = SERVO_PULL;
 					}
 					else if(auto_start == 1)
 					{
@@ -616,13 +620,12 @@ void dart_set_control(dart_control_t *set_control)                //¹æ¶¨Ö»ÔÚ´Ë´¦
 											}
 												
 									}
-									
 								}
 								
 						}
 						else if(set_control->dart_reload_step == SERVO_UP)
 						{
-								set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT/5;       //²»ÄÜÉÏÉýÌ«¿ì,²»È»ÔÚÁ¦¶È´óµÄÇé¿öÏÂÍ¬²½´øÍÑ³Ý,3508¶¨Î»²»×¼
+								set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT/2.0;       //²»ÄÜÉÏÉýÌ«¿ì,²»È»ÔÚÁ¦¶È´óµÄÇé¿öÏÂÍ¬²½´øÍÑ³Ý,3508¶¨Î»²»×¼
 								ANGLE_SET_3508 = PULL_3508_P2;
 								if(dart_motor_check(&set_control->Dart_3508_Motor,ANGLE_SET_3508,DART_3508_SENSITIVE))
 								{
@@ -631,21 +634,26 @@ void dart_set_control(dart_control_t *set_control)                //¹æ¶¨Ö»ÔÚ´Ë´¦
 										if(set_control->Dart_servo_wait_down > dart_down_ready2/DART_CONTROL_TIME)							//µÈ´ý¶æ»ú
 										{
 											  set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT;
-												ANGLE_SET_3508 = PULL_3508_ANGLE_DOWN;                 //¿ªÊ¼ÏÂÀ­
 												set_control->Dart_servo_wait_down = 0;									
 												set_control->dart_reload_step = SERVO_PULL;   //²»ÔÙÖØÈë´Ëº¯Êý
 										}
 									
 								}
 						}//if	
-					}//case
+					}
+					
+					if(set_control->dart_reload_step == SERVO_PULL)  //¸ÄÎªËÙ¶Èpid
+					{
+							set_control->Dart_3508_Motor.speed_set = -BULLET_3508_ANGLE_PID_MAX_OUT/1.9; 
+							ANGLE_SET_3508 = PULL_3508_ANGLE_DOWN;                 //¿ªÊ¼ÏÂÀ­
+					}
 #else
 					ANGLE_SET_3508 = PULL_3508_ANGLE_DOWN;      //ÈÏÎªÒÑ¾­»»Íêµ¯ÁË µ¥·¢Ä£Ê½
 					
 #endif					
 					
 					break;
-				}
+				}//case
 
 				case SHOOT_FINISH_PULL :                                          //ÉÏµ¯Íê³É,×¼±¸¸´Î»3508
 					{
@@ -665,7 +673,7 @@ void dart_set_control(dart_control_t *set_control)                //¹æ¶¨Ö»ÔÚ´Ë´¦
 						
 						else if(set_control->Dart_Flag.waitingLock.count >= dart_3508_wait_slow/DART_CONTROL_TIME && set_control->Dart_Flag.waitingLock.count <= dart_3508_wait_fast/DART_CONTROL_TIME)
 						{
-							set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT;
+							set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT * 1.6;
 						}
 
              break;
@@ -673,14 +681,11 @@ void dart_set_control(dart_control_t *set_control)                //¹æ¶¨Ö»ÔÚ´Ë´¦
 									
 				case SHOOT_READY_BULLET :
 						{						
-					  	
+					  	set_control->Dart_3508_Angle_Pid.MaxOut = BULLET_3508_ANGLE_PID_MAX_OUT;
 							break;
 						}
 				case SHOOT_BULLET:
 					{
-#if FORCE_CONTROL
-						set_control->Dart_2006_Bullet_Force_ANGLE_Pid.Iout = 0;
-#endif
 						triggerPWM = unlockPWM; 
 						set_control->Dart_3508_Motor.speed_set = 0.0f;  //±£ÏÕ
 						set_control->dart_reload_step = SERVO_READY;
@@ -723,16 +728,23 @@ void dart_control_loop(dart_control_t *control_loop)
 				if( control_loop->Shoot_Mode == SHOOT_UPING)//3508¸´Î»
 				{
 						control_loop->Dart_3508_Motor.give_current = int16_constrain((int16_t)PID_Calculate(&control_loop->Dart_3508_Gyro_Pid,
-						control_loop->Dart_3508_Motor.speed,control_loop->Dart_3508_Motor.speed_set),-10000,10000);						                      //Êä³öÏÞ·ù ÒÔ´Ë¸Ä±äÉÏµ¯µÄÁ¦ 16384
+						control_loop->Dart_3508_Motor.speed,control_loop->Dart_3508_Motor.speed_set),-3000,3000);						                      //Êä³öÏÞ·ù ÒÔ´Ë¸Ä±äÉÏµ¯µÄÁ¦ 16384
 				}
 				else if(control_loop->Dart_Flag.Reset_all_2006_ready.flag == 1)      //¸´Î»Íê³É²ÅÄÜ¶¯
 				{
-						
-					  control_loop->Dart_3508_Motor.speed_set = int16_constrain((int16_t)PID_Calculate(&control_loop->Dart_3508_Angle_Pid,
-																		control_loop->Dart_3508_Motor.angle,control_loop->Dart_3508_Motor.angle_set),-600,600);		
+					if(control_loop->dart_reload_step == SERVO_PULL)
+					{
+					  control_loop->Dart_3508_Motor.give_current = PID_Calculate(&control_loop->Dart_3508_Gyro_Pid,
+						control_loop->Dart_3508_Motor.speed,control_loop->Dart_3508_Motor.speed_set);				
+					}
+					else
+					{
+						control_loop->Dart_3508_Motor.speed_set = PID_Calculate(&control_loop->Dart_3508_Angle_Pid,
+																		control_loop->Dart_3508_Motor.angle,control_loop->Dart_3508_Motor.angle_set);
 					
 						control_loop->Dart_3508_Motor.give_current = (int16_t)PID_Calculate(&control_loop->Dart_3508_Gyro_Pid,
-																		control_loop->Dart_3508_Motor.speed,control_loop->Dart_3508_Motor.speed_set);		
+																		control_loop->Dart_3508_Motor.speed,control_loop->Dart_3508_Motor.speed_set);	
+					}
 											
 				}
 				else//±£ÏÕ
@@ -744,24 +756,12 @@ void dart_control_loop(dart_control_t *control_loop)
 				//·¢µ¯2006
 				if(control_loop->Dart_Flag.Reset_Bullet_2006.flag == 1)
 				{
-#if FORCE_CONTROL
-						if(force_start == 1 && force_OK == 0)
-						{
-							control_loop->Dart_2006_Bullet_Motor.speed_set =int16_constrain((int16_t) PID_Calculate(&control_loop->Dart_2006_Bullet_Force_ANGLE_Pid,force_mv,force_mv_set),-50,50);   //¹ýºó¿ÉÒÔ³¢ÊÔ´®¼¶pid»òÕßADRC
-
-							control_loop->Dart_2006_Bullet_Motor.give_current = PID_Calculate(&control_loop->Dart_2006_Bullet_Force_GYRO_Pid,control_loop->Dart_2006_Bullet_Motor.speed
-																								,control_loop->Dart_2006_Bullet_Motor.speed_set);   //¹ýºó¿ÉÒÔ³¢ÊÔ´®¼¶pid»òÕßADRC
-
-						}
-						else
-#endif
-						{
 					  control_loop->Dart_2006_Bullet_Motor.speed_set = int16_constrain((int16_t)PID_Calculate(&control_loop->Dart_2006_Bullet_Angle_Pid,
 																		control_loop->Dart_2006_Bullet_Motor.angle,control_loop->Dart_2006_Bullet_Motor.angle_set),-100,100);		
 					
 						control_loop->Dart_2006_Bullet_Motor.give_current = (int16_t)PID_Calculate(&control_loop->Dart_2006_Bullet_Gyro_Pid,
 																		control_loop->Dart_2006_Bullet_Motor.speed,control_loop->Dart_2006_Bullet_Motor.speed_set);		
-						}
+						
 				}
 				else      //2006¸´Î»			
 				{
@@ -788,8 +788,8 @@ void dart_control_loop(dart_control_t *control_loop)
 						}
 						else if(control_loop->Dart_Flag.Reset_Yaw_2006.flag == 0)
 						{
-						control_loop->Dart_Yaw_Motor.give_current = PID_Calculate(&control_loop->Yaw_Motor_Gyro_Pid,
-																		control_loop->Dart_Yaw_Motor.speed,control_loop->Dart_Yaw_Motor.speed_set);					        //ËÙ¶ÈPID    Ê×ÏÈ»ØÕý
+						control_loop->Dart_Yaw_Motor.give_current = int16_constrain((int16_t)PID_Calculate(&control_loop->Yaw_Motor_Gyro_Pid,
+																		control_loop->Dart_Yaw_Motor.speed,control_loop->Dart_Yaw_Motor.speed_set),-4000,4000);					        //ËÙ¶ÈPID    Ê×ÏÈ»ØÕý
 						}
 	
 				}				
@@ -806,8 +806,6 @@ void dart_control_loop(dart_control_t *control_loop)
 }
 
 
-
-#if AUTO_RELOAD_TEST
 void dart_auto_reload(dart_control_t * dart_reload,int last_switch)                     //´Ë´¦ÎªÁ¬·¢Âß¼­
 {
 		if(switch_is_up(dart_reload->Dart_Rc_Ctrl->rc.s[SHOOT_MODE_CHANNEL]) && 
@@ -816,6 +814,7 @@ void dart_auto_reload(dart_control_t * dart_reload,int last_switch)             
 		{                                                           					//½«ÉÏµ¯¸ÄÎª×Ô¶¯·¢µ¯Ä£Ê½
 				 auto_start = 1;                                       
 		}
+		
 		
 		if(auto_start == 1)
 		{
@@ -826,31 +825,52 @@ void dart_auto_reload(dart_control_t * dart_reload,int last_switch)             
 						auto_start = 0;
 						return;
 					}
-#endif
+					
+					if(auto_start_last == 0 && auto_start == 1)
+					{
+						auto_start_once++;
+					}
+					
+					if(((auto_start_once == 2&&dart_reload->Shoot_Time < 4) 
+						||(auto_start_once == 1&&dart_reload->Shoot_Time < 2))
+					&& (dart_reload->Shoot_Mode == SHOOT_STOP || dart_reload->Shoot_Mode == SHOOT_READY_3508_AND_2006 ))                    
+					{
+						//Á¬·¢Á½´Î
+						dart_reload->Shoot_Mode = SHOOT_RELOADING; //¾ö¶¨¿ªÊ¼ÏÂÀ­
+					}
+					else if(dart_reload->Shoot_Time == 2 && dart_reload->Shoot_Mode == SHOOT_READY_3508_AND_2006)
+					{
+						auto_start = 0;
+						dart_reload->Shoot_Mode = SHOOT_STOP;
+					}
+					else if(dart_reload->Shoot_Time == 4 && dart_reload->Shoot_Mode == SHOOT_READY_3508_AND_2006)
+					{
+						auto_start = 0;
+						auto_start_once=0;
+						dart_reload->Shoot_Mode = SHOOT_STOP;
+						dart_reload->Shoot_Time = 0;
+					}						
+#else
 					if((dart_reload->Shoot_Time < SHOOT_TIME_SET + 1) && (dart_reload->Shoot_Mode == SHOOT_STOP || dart_reload->Shoot_Mode == SHOOT_READY_3508_AND_2006))                    
 					{
 						dart_reload->Shoot_Mode = SHOOT_RELOADING; //¾ö¶¨¿ªÊ¼ÏÂÀ­
 					}
 					else if(dart_reload->Shoot_Time == SHOOT_TIME_SET + 1)
 					{
+
 						dart_reload->Shoot_Time = 0;
-						auto_start = 0;
 						ANGLE_SET_6020 = RELOAD_6020_ANGLE0;
+						auto_start = 0;
 						dart_reload->Shoot_Mode = SHOOT_STOP;
 						return;
 					}
-
+#endif
 											
 					if(dart_reload->Shoot_Mode == SHOOT_READY_BULLET )
 					            //Èç¹ûÍê³É»»µ¯»òÕßÎªµÚÒ»´Î·¢Éä¾ÍÖ±½Ó·¢Éä
 					{					
 							dart_reload->Shoot_Mode = SHOOT_BULLET;
-					}
-					
-							
+					}					
 		}
 		auto_start_last = auto_start;
-
 }
-
-#endif

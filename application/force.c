@@ -1,6 +1,7 @@
 #include "stm32f4xx.h"                  // Device header
 #include "force.h"
 #include "freertos.h"
+#include "dart_task.h"
 #include <stdlib.h>
 
 extern UART_HandleTypeDef Force_huart;
@@ -61,21 +62,32 @@ uchCRCLo = (unsigned char)(auchCRCLo[uIndex]);
 
 void force_ini()
 {
-	
-			for(int i = 0; i <TX_BITS;i++)
+#if REFERREE_START
+#else
+	for(int i = 0; i <TX_BITS;i++)
 	{
 		HAL_UART_Transmit(&Force_huart,force_ini_arr +i,1,1);		//等待时间有点蛊
 	}
 		GetModbusCRC16(force_tx_data,6,force_tx_CRC_H,force_tx_CRC_L);
 		force_tx_data[6] = force_tx_CRC_H[0];
 		force_tx_data[7] = force_tx_CRC_L[0];                                     //计算CRC校验码
+#endif
 }	
 
 void get_force(void const * argument)
 {
+#if REFEREE_START
+#else
 	force_ini();
+#endif
+	
 	while(1)
-	{			//这一段可以优化
+	{			
+#if REFEREE_START
+		
+#else
+		
+		//这一段可以优化
 			if(force_tx_count == 15	)           //太短了反而会无法读取
 			{
 				force_rx_handler(force_rx_arr);
@@ -87,6 +99,7 @@ void get_force(void const * argument)
 				force_tx_count = 0;
 			}
 			force_tx_count++;
+#endif
 			osDelay(1);
 	}
 }
@@ -109,6 +122,9 @@ void force_rx_handler(uint8_t * data)
 
 void force_send(UART_HandleTypeDef *res_huart)
 {
+#if REFEREE_START
+#else
 		memcpy(force_tx_res,&force_mv,4);
 		HAL_UART_Transmit_DMA(res_huart,force_tx_res,4);
+#endif
 }

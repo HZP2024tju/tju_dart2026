@@ -13,6 +13,7 @@ uint8_t usart6_buf[2][USART_RX_BUF_LENGHT];
 fifo_s_t referee_fifo;
 uint8_t referee_fifo_buf[REFEREE_FIFO_BUF_LENGTH];
 unpack_data_t referee_unpack_obj;
+
 //裁判系统任务
 void referee_usart_task(void const * argument)
 {
@@ -121,6 +122,7 @@ void referee_unpack_fifo_data(void)
 		}
 	}
 }
+
 void USART6_IRQHandler(void)
 {
     static volatile uint8_t res;
